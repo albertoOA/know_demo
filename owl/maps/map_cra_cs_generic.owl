@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY knowrob "http://knowrob.org/kb/knowrob.owl#" >
+    <!ENTITY SOMA "http://www.ease-crc.org/ont/SOMA.owl#" >
+    <!ENTITY dul "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#" >
+    <!ENTITY ocra "http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra.owl#" >
+    <!ENTITY ocra_home "http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_home.owl#" >
+    <!ENTITY ocra_common "http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#" >
+    <!ENTITY map_generic "http://www.iri.upc.edu/groups/perception/OCRA/maps/generic.owl#" >
+    <!ENTITY urdf "http://knowrob.org/kb/urdf.owl#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+<rdf:RDF xmlns="http://www.iri.upc.edu/groups/perception/OCRA/maps/generic.owl#"
+    xml:base="http://www.iri.upc.edu/groups/perception/OCRA/maps/generic.owl"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:map_generic="http://www.iri.upc.edu/groups/perception/OCRA/maps/generic.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
+    xmlns:dul="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
+    xmlns:urdf="http://knowrob.org/kb/urdf.owl#"
+    xmlns:knowrob="http://knowrob.org/kb/knowrob.owl#"
+    xmlns:ocra="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra.owl#"
+    xmlns:ocra_home="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_home.owl#"
+    xmlns:ocra_common="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#">
+    <owl:Ontology rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/maps/generic.owl#">
+        <owl:imports rdf:resource="package://knowrob/owl/knowrob.owl"/>
+        <owl:imports rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra.owl"/>
+        <owl:imports rdf:resource="package://know_plan/owl/ocra_common.owl"/>
+        <!--
+        <owl:imports rdf:resource="package://know_plan/owl/ocra.owl"/>
+
+        -->
+    </owl:Ontology>
+
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <!-- &map_generic;robot_end_effector -->
+
+    <owl:NamedIndividual rdf:about="&map_generic;robot_end_effector">
+        <rdf:type rdf:resource="&SOMA;PrehensileEffector"/>
+        <SOMA:hasShape>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Shape"/>
+                <dul:hasRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;SphereShape"/>
+                        <SOMA:hasRadius rdf:datatype="&xsd;double">0.05</SOMA:hasRadius>
+                    </owl:NamedIndividual>
+                </dul:hasRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasShape>
+        <SOMA:hasColor>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Color"/>
+                <dul:hasRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;ColorRegion"/>
+                        <SOMA:hasRGBValue rdf:datatype="&SOMA;array_double">0.0 1.0 0.0 1.0</SOMA:hasRGBValue>
+                    </owl:NamedIndividual>
+                </dul:hasRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasColor>
+        <SOMA:hasLocalization>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Localization"/>
+                <SOMA:hasSpaceRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;6DPose"/>
+                        <knowrob:quaternion rdf:datatype="&SOMA;array_double">0.0 0.0 0.0 1.0</knowrob:quaternion>
+                        <knowrob:translation rdf:datatype="&SOMA;array_double">-1.70 -0.85 1.00</knowrob:translation>
+                    </owl:NamedIndividual>
+                </SOMA:hasSpaceRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasLocalization>
+    </owl:NamedIndividual>
+
+
+    <!-- &map_generic;human_end_effector -->
+
+    <owl:NamedIndividual rdf:about="&map_generic;human_end_effector">
+        <rdf:type rdf:resource="&SOMA;PrehensileEffector"/>
+        <SOMA:hasShape>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Shape"/>
+                <dul:hasRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;SphereShape"/>
+                        <SOMA:hasRadius rdf:datatype="&xsd;double">0.05</SOMA:hasRadius>
+                    </owl:NamedIndividual>
+                </dul:hasRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasShape>
+        <SOMA:hasColor>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Color"/>
+                <dul:hasRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;ColorRegion"/>
+                        <SOMA:hasRGBValue rdf:datatype="&SOMA;array_double">1.0 0.0 0.0 1.0</SOMA:hasRGBValue>
+                    </owl:NamedIndividual>
+                </dul:hasRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasColor>
+        <SOMA:hasLocalization>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Localization"/>
+                <SOMA:hasSpaceRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;6DPose"/>
+                        <knowrob:quaternion rdf:datatype="&SOMA;array_double">0.0 0.0 0.0 1.0</knowrob:quaternion>
+                        <knowrob:translation rdf:datatype="&SOMA;array_double">-0.35 -0.45 1.00</knowrob:translation>
+                        <!--  <knowrob:translation rdf:datatype="&SOMA;array_double">-1.32 -0.77 1.04</knowrob:translation> -->
+                    </owl:NamedIndividual>
+                </SOMA:hasSpaceRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasLocalization>
+    </owl:NamedIndividual>
+
+
+    <!-- &knowrob;work_table -->
+
+    <owl:NamedIndividual rdf:about="&map_generic;work_table">
+        <rdf:type rdf:resource="&SOMA;Countertop"/>
+        <SOMA:hasShape>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Shape"/>
+                <dul:hasRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;BoxShape"/>
+                        <SOMA:hasHeight rdf:datatype="&xsd;double">0.72</SOMA:hasHeight>
+                        <SOMA:hasDepth rdf:datatype="&xsd;double">0.8</SOMA:hasDepth>
+                        <SOMA:hasWidth rdf:datatype="&xsd;double">1.6</SOMA:hasWidth>
+                    </owl:NamedIndividual>
+                </dul:hasRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasShape>
+        <SOMA:hasLocalization>
+            <owl:NamedIndividual>
+                <rdf:type rdf:resource="&SOMA;Localization"/>
+                <SOMA:hasSpaceRegion>
+                    <owl:NamedIndividual>
+                        <rdf:type rdf:resource="&SOMA;6DPose"/>
+                        <knowrob:quaternion rdf:datatype="&SOMA;array_double">0.0 0.0 0.0 1.0</knowrob:quaternion>
+                        <knowrob:translation rdf:datatype="&SOMA;array_double">-1.00 -0.45 0.36</knowrob:translation>
+                    </owl:NamedIndividual>
+                </SOMA:hasSpaceRegion>
+            </owl:NamedIndividual>
+        </SOMA:hasLocalization>
+    </owl:NamedIndividual>
+
+    <!-- example of reified statement using RDF reification
+    <rdf:Statement rdf:about="#triple12345">
+        <rdf:subject rdf:resource="&map_generic;work_table"/>
+        <rdf:predicate rdf:resource="&SOMA;hasLocation"/>
+        <rdf:object rdf:resource="&SOMA;Location"/>
+
+        <dul:associatedWith rdf:resource="&map_generic;human_end_effector"/>
+    </rdf:Statement>
+    -->
+
+
+
+</rdf:RDF>
+<!-- Generated by the OWL API (version 3.1.0.1592) http://owlapi.sourceforge.net -->
+
+
