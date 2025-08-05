@@ -31,7 +31,7 @@ if __name__ == "__main__":
         print(plan_triples_list[i])
         print("\n")
     """
-    print(plan_triples_list)
+    #print(plan_triples_list)
 
     plan_assertion_query_text = rosprolog_utils_object.construct_query_text_for_multiple_triples_assertion(plan_triples_list, True)
     ## print(plan_assertion_query_text)
@@ -46,5 +46,5 @@ if __name__ == "__main__":
         rpcra.rosprolog_wrapper_for_rosplan_cra_.rosprolog_assertion_query(query_string_foo_)
     """
 
-    rospy.spin()
+    #rospy.spin()
 
