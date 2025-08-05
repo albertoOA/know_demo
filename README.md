@@ -12,3 +12,16 @@ This example runs a simple knowledge base with general ontologies (e.g. knowrob,
 ```
 roslaunch know_demo generic_semantic_map.launch 
 ``` 
+
+
+### Python3 virtual environment configuration and dependencies
+
+In the package, we already provide a virtual environment but it was built for our computer and it will probably not work in yours. You can easily delete it and create and configure your own environment executing the following commands in a terminal (note that python3-venv needs to bee installed).
+
+```
+cd <know_demo_folder>/python_environment
+python3 -m venv know_demo_venv
+source know_demo_venv/bin/activate
+
+python3 -m pip install rospkg pyyaml numpy pandas future
+```
