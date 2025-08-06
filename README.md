@@ -38,6 +38,8 @@ roslaunch know_demo memory_generation_with_generic_map.launch
 
 This example runs a node that reads an episodic memory containing knowledge about demonstrations and loads it in a generic knowledge base with general ontologies and including minimal semantic instances in it (e.g. a robot and a human). 
 
+**Note** that you will need to unzip the example neem before running the launch file. Alternatively, you can run the *memory genration* example setting to 'True' the storage of a NEEM, then, you will need to update the neem folder name in the launch that will load it. 
+
 ```
 roslaunch know_demo memory_loading_with_generic_map.launch 
 ``` 
