@@ -15,13 +15,13 @@ if __name__ == "__main__":
     rosprolog_utils_object = rosprologUtils()
 
     save_neem = False
-    dataset_csv_file_name = 'plans_general_properties.csv'
+    dataset_name = 'plans_general_properties'
+    dataset_csv_file_name = dataset_name + '.csv'
 
     # read the properties of the target plans (demonstrations from data)
     plans_qualities_values_dict = general_utils_object.create_dict_from_csv_file(general_utils_object.csv_file_path,\
                                                                                   dataset_csv_file_name, ',')
-    
-    print(plans_qualities_values_dict)
+    ##print(plans_qualities_values_dict)
 
 
 
@@ -31,20 +31,20 @@ if __name__ == "__main__":
         print(plan_triples_list[i])
         print("\n")
     """
-    #print(plan_triples_list)
+    ##print(plan_triples_list)
 
     plan_assertion_query_text = rosprolog_utils_object.construct_query_text_for_multiple_triples_assertion(plan_triples_list, True)
-    ## print(plan_assertion_query_text)
+    ##print(plan_assertion_query_text)
+
     rosprolog_utils_object.rosprolog_assertion_query(plan_assertion_query_text)
 
-    # save the NEEM using in the name 'plan_adaptation_case_' and the current time
-    """
+    # save the NEEM using in the name 'dataset_name' and the current time
     if save_neem:
         query_string_foo_ = "ros_package_path('know_demo', P1), \
-            atom_concat(P1, '/neem/contrastive_plans/"+ dataset_csv_file_name +"_' , P2), \
+            atom_concat(P1, '/neem/"+ dataset_name +"_' , P2), \
             get_time(T), atom_concat(P2, T, P3), mng_dump(roslog, P3)."
-        rpcra.rosprolog_wrapper_for_rosplan_cra_.rosprolog_assertion_query(query_string_foo_)
-    """
+        rosprolog_utils_object.rosprolog_assertion_query(query_string_foo_)
+    
 
     #rospy.spin()
 
