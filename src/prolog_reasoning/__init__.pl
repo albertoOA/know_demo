@@ -1,3 +1,3 @@
 
 % load init files in sub-directories
-/* :- use_directory(''). */
+:- use_directory('know_plan_reasoning'). 
