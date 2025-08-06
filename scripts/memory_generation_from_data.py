@@ -14,8 +14,15 @@ if __name__ == "__main__":
     general_utils_object = generalUtils()
     rosprolog_utils_object = rosprologUtils()
 
-    save_neem = False
-    dataset_name = 'plans_general_properties'
+    if (rospy.has_param('~store_neem')):
+        store_neem = rospy.get_param('~store_neem')
+    else:
+        store_neem = False
+    
+    if (rospy.has_param('~dataset_name')):
+        dataset_name = rospy.get_param('~dataset_name')
+    else:
+        dataset_name = 'plans_general_properties'
     dataset_csv_file_name = dataset_name + '.csv'
 
     # read the properties of the target plans (demonstrations from data)
@@ -39,7 +46,7 @@ if __name__ == "__main__":
     rosprolog_utils_object.rosprolog_assertion_query(plan_assertion_query_text)
 
     # save the NEEM using in the name 'dataset_name' and the current time
-    if save_neem:
+    if store_neem:
         query_string_foo_ = "ros_package_path('know_demo', P1), \
             atom_concat(P1, '/neem/"+ dataset_name +"_' , P2), \
             get_time(T), atom_concat(P2, T, P3), mng_dump(roslog, P3)."
