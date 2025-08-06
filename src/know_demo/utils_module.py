@@ -64,7 +64,7 @@ class rosprologUtils:
 
         # Define varibles
         self.client_rosprolog_ = Prolog()
-        self.current_plan_kb_uri = ""
+        ##self.current_plan_kb_uri = ""
 
         if (rospy.has_param('~semantic_map_namespace')):
             self.semantic_map_namespace = rospy.get_param('~semantic_map_namespace')
@@ -93,7 +93,7 @@ class rosprologUtils:
             plan_kb_uri = self.semantic_map_namespace + ":'" + plan_id + "'"
             triples_list.append([plan_kb_uri, "rdf:'type'", "dul:'Plan'"])
 
-            self.current_plan_kb_uri = plan_kb_uri
+            ##self.current_plan_kb_uri = plan_kb_uri
 
             # knowledge about plan properties
             triples_list.append([plan_kb_uri, "ocra_common:'hasExpectedMakespan'", \
