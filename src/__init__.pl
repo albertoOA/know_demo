@@ -26,7 +26,7 @@
 */
 
 :- register_ros_package(knowrob).
-:- register_ros_package(know_plan).
+:- register_ros_package(know_demo).
 
 % register ROS packages to resolve IRI prefixes to local paths
 :- ros_package_iri(know_demo, 'http://www.iri.upc.edu/groups/perception/OCRA/ont').
@@ -41,9 +41,7 @@
 :- rdf_register_ns('ocra_common', 'http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#', [keep(true)]).
 :- rdf_register_ns('ocra_plan', 'http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_plan.owl#', [keep(true)]).
 :- rdf_register_ns('map', 'http://www.iri.upc.edu/groups/perception/OCRA/maps/filling_a_tray.owl#', [keep(true)]).
-:- rdf_register_ns('map_piling_cloth', 'http://www.iri.upc.edu/groups/perception/OCRA/maps/piling_cloth.owl#', [keep(true)]).
-:- rdf_register_ns('map_bringing_object', 'http://www.iri.upc.edu/groups/perception/OCRA/maps/bringing_object.owl#', [keep(true)]).
-:- rdf_register_ns('map_generic_cs', 'http://www.iri.upc.edu/groups/perception/ont/maps/map_generic_cs.owl#', [keep(true)]).
+:- rdf_register_ns('generic_map', 'http://www.iri.upc.edu/groups/perception/ont/maps/generic_map.owl#', [keep(true)]).
 
 :- mng_drop(roslog, triples). /*to delete manually asserted triples using the rosprolog_commandline, which remain in the MongoDB*/
 
