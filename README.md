@@ -18,6 +18,15 @@ python3 -m pip install rospkg pyyaml numpy pandas future
 ```
 
 
+### Downloading files from an external github repository (know-plan)
+In order to avoid creating a duplicate of the logical rules to compare planes formalized and implemented in [know-plan](https://github.com/albertoOA/know_plan), ***know-demo*** includes a script to download and update the pertinent files. It is possible to program a github action to download them regularly, but for now it will be a manual process. 
+
+```
+cd <know_demo_folder>
+chmod +x scripts/sh/update_shared_file_prolog_reasoning.sh 
+./scripts/sh/update_shared_file_prolog_reasoning.sh
+``` 
+
 ### Running a generic knowledge base
 
 This example runs a simple knowledge base with general ontologies (e.g. dul, knowrob, soma, ocra, etc.) and including minimal semantic instances in it (e.g. a robot and a human). 
@@ -43,3 +52,5 @@ This example runs a node that reads an episodic memory containing knowledge abou
 ```
 roslaunch know_demo memory_loading_with_generic_map.launch 
 ``` 
+
+for the reasoning, we use the ssh file!!
