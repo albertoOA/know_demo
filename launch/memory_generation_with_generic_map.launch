@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="semantic_map_namespace"	 	default="generic_map" /> <!-- <demonstrations_set>_map, etc. NOTE THAT IT MUST BE ADDED TO know_demo/src/__init__.pl-->
+	
+	<!-- Include a generic map knowledge base -->
+	<include file="$(find know_demo)/launch/generic_semantic_map.launch">
+		<!-- .. -->
+	</include>
+
+	<!-- Include memory generation node -->
+	<node name="memory_generation_from_data_node" pkg="know_demo" type="memory_generation_from_data.py" output="screen">
+		<param name="semantic_map_namespace" value="$(arg semantic_map_namespace)" /> 
+    </node>
+
+</launch>
