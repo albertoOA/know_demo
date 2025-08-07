@@ -37,7 +37,7 @@ roslaunch know_demo generic_semantic_map.launch
 
 ### Running an example to populate a generic knowledge base with episodic demonstrations
 
-This example runs a node that reads some target knowledge about demonstrations and stores it in a generic knowledge base with general ontologies and including minimal semantic instances in it (e.g. a robot and a human). 
+This example runs a node that reads some target knowledge about demonstrations and stores it in a generic knowledge base with general ontologies and including minimal semantic instances in it (e.g. a robot and a human). The node also runs some prolog reasoning rules for plan comparison. 
 
 ```
 roslaunch know_demo memory_generation_with_generic_map.launch 
