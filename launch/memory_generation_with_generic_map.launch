@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 	<arg name="semantic_map_namespace"	 	default="generic_map" /> <!-- <demonstrations_set>_map, etc. NOTE THAT IT MUST BE ADDED TO know_demo/src/__init__.pl-->
+	<arg name="keep_node_running"	 	default="True" />
 	<arg name="store_neem"	 	default="False" />
 	<arg name="dataset_name"	 	default="plans_general_properties" /> <!-- note that there shall be a file in the csv folder with the same name (without the '.csv')-->
 

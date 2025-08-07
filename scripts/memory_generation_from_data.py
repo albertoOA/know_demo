@@ -14,6 +14,11 @@ if __name__ == "__main__":
     general_utils_object = generalUtils()
     rosprolog_utils_object = rosprologUtils()
 
+    if (rospy.has_param('~keep_node_running')):
+        keep_node_running = rospy.get_param('~keep_node_running')
+    else:
+        keep_node_running = False
+
     if (rospy.has_param('~store_neem')):
         store_neem = rospy.get_param('~store_neem')
     else:
@@ -30,8 +35,6 @@ if __name__ == "__main__":
                                                                                   dataset_csv_file_name, ',')
     ##print(plans_qualities_values_dict)
 
-
-
     plan_triples_list = rosprolog_utils_object.plan_qualities_dict_to_triples_list(plans_qualities_values_dict)
     """ # for debugging
     for i in range(0, 25):
@@ -45,13 +48,22 @@ if __name__ == "__main__":
 
     rosprolog_utils_object.rosprolog_assertion_query(plan_assertion_query_text)
 
+
+    # run some logic-based rules to assert new comparative relations between every pair of plans
+    query_string_foo_ = "compare_all_existing_plans_in_pairs()."
+    rosprolog_utils_object.rosprolog_assertion_query(query_string_foo_)
+
     # save the NEEM using in the name 'dataset_name' and the current time
     if store_neem:
         query_string_foo_ = "ros_package_path('know_demo', P1), \
             atom_concat(P1, '/neem/"+ dataset_name +"_' , P2), \
             get_time(T), atom_concat(P2, T, P3), mng_dump(roslog, P3)."
         rosprolog_utils_object.rosprolog_assertion_query(query_string_foo_)
+    else:
+        pass
     
-
-    #rospy.spin()
+    if keep_node_running:
+        rospy.spin()
+    else:
+        pass
 
