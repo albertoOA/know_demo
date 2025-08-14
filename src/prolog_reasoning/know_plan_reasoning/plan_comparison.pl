@@ -82,12 +82,12 @@ compare_two_plans_based_on_number_of_tasks(Pa, Pb) :-
 % @param Pb         Instance of dul:'Plan'
 %
 compare_two_plans_based_on_makespan(Pa, Pb) :-
-	triple(Pa, ocra_common:'hasExpectedMakespan', Xa), 
-	triple(Pb, ocra_common:'hasExpectedMakespan', Xb), 
+	triple(Pa, ocra_common:'hasMakespan', Xa), 
+	triple(Pb, ocra_common:'hasMakespan', Xb), 
 	triple(Xa, dul:'hasDataValue', Va), 
 	triple(Xb, dul:'hasDataValue', Vb), 
 	(ground(Xa), ground(Xb)) ->
-	((Va == Vb) -> kb_project(triple(Xa, ocra_common:'hasEquivalentQualityValueThan', Xb)), kb_project(triple(Xb, ocra_common:'hasEquivalentQualityValueThan', Xa)), kb_project(triple(Pb, ocra_common:'isPlanWithSameExpectedMakespanAs', Pa)), kb_project(triple(Pa, ocra_common:'isPlanWithSameExpectedMakespanAs', Pb)) ;
+	((Va == Vb) -> kb_project(triple(Xa, ocra_common:'hasEquivalentQualityValueThan', Xb)), kb_project(triple(Xb, ocra_common:'hasEquivalentQualityValueThan', Xa)), kb_project(triple(Pb, ocra_common:'isPlanWithSameMakespanAs', Pa)), kb_project(triple(Pa, ocra_common:'isPlanWithSameMakespanAs', Pb)) ;
 	((Va < Vb) -> kb_project(triple(Xa, ocra_common:'hasBetterQualityValueThan', Xb)), kb_project(triple(Xb, ocra_common:'hasWorseQualityValueThan', Xa)), kb_project(triple(Pb, ocra_common:'isSlowerPlanThan', Pa)), kb_project(triple(Pa, ocra_common:'isFasterPlanThan', Pb)) ; 
 	kb_project(triple(Xb, ocra_common:'hasBetterQualityValueThan', Xa)), kb_project(triple(Xa, ocra_common:'hasWorseQualityValueThan', Xb)), kb_project(triple(Pa, ocra_common:'isSlowerPlanThan', Pb)), kb_project(triple(Pb, ocra_common:'isFasterPlanThan', Pa)))) ; false. 
 
@@ -104,8 +104,8 @@ compare_two_plans_based_on_overall_quality(Pa, Pb) :-
 	triple(Pb, ocra_common:'hasCost', Cb), 
 	triple(Pa, ocra_common:'hasNumberOfTasks', Ta), 
 	triple(Pb, ocra_common:'hasNumberOfTasks', Tb),
-	triple(Pa, ocra_common:'hasExpectedMakespan', Ma), 
-	triple(Pb, ocra_common:'hasExpectedMakespan', Mb),
+	triple(Pa, ocra_common:'hasMakespan', Ma), 
+	triple(Pb, ocra_common:'hasMakespan', Mb),
 	(ground(Ca), ground(Cb), ground(Ta), ground(Tb), ground(Ma), ground(Mb)) ->
 	((triple(Ca, ocra_common:'hasBetterQualityValueThan', Cb), triple(Ta, ocra_common:'hasBetterQualityValueThan', Tb), triple(Ma, ocra_common:'hasBetterQualityValueThan', Mb)) ->
 	kb_project(triple(Pa, ocra:'isBetterPlanThan', Pb)),  kb_project(triple(Pb, ocra:'isWorsePlanThan', Pa)) ; 
