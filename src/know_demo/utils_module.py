@@ -3,6 +3,7 @@
 # Author: Alberto Olivares Alarcos <aolivares@iri.upc.edu>, Institut de Robòtica i Informàtica Industrial, CSIC-UPC
 
 
+import re
 import rospy
 import rospkg
 import pandas as pd
@@ -50,8 +51,6 @@ class generalUtils:
             None.
         """
 
-        out_dict = dict()
-
         df = pd.DataFrame.from_dict(dict_in, orient='columns')
         df.to_csv(csv_file_path + '/' + csv_file_name, index=False) # data frame
     
@@ -87,6 +86,10 @@ class rosprologUtils:
 
         rospy.loginfo(rospy.get_name() + ": Formatting the plan sequence details as a set of triples to assert them to the ontology KB")
 
+        qualities_list = list(plan_dict.keys())
+        qualities_list.remove('PlanID')
+        #print(qualities_list)
+
         triples_list = list()
         for i in range(0, len(plan_dict["PlanID"])):
             plan_id = plan_dict["PlanID"][i] #+ "_" + str(datetime.utcnow()).replace(" ", "_") + "-UTC"
@@ -95,29 +98,20 @@ class rosprologUtils:
 
             ##self.current_plan_kb_uri = plan_kb_uri
 
-            # knowledge about plan properties
-            triples_list.append([plan_kb_uri, "ocra_common:'hasExpectedMakespan'", \
-                                self.semantic_map_namespace + ":'" + plan_id + "_makespan'"])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_makespan'", \
-                                "dul:'hasDataValue'", str(plan_dict["Makespan"][i])])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_makespan'", \
-                                "rdf:'type'", "dul:'Quality'"])
-            
-            triples_list.append([plan_kb_uri, "ocra_common:'hasNumberOfTasks'", \
-                                self.semantic_map_namespace + ":'" + plan_id + "_number_of_tasks'"])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_number_of_tasks'", \
-                                "dul:'hasDataValue'", str(plan_dict["NumberOfTasks"][i])])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_number_of_tasks'", \
-                                "rdf:'type'", "dul:'Quality'"])
-            
-            triples_list.append([plan_kb_uri, "ocra_common:'hasCost'", \
-                                self.semantic_map_namespace + ":'" + plan_id + "_cost'"])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_cost'", \
-                                "dul:'hasDataValue'", str(plan_dict["Cost"][i])])
-            triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_cost'", \
-                                "rdf:'type'", "dul:'Quality'"])
+            for q in qualities_list:
+                q_relation = 'has' + q
+                foo = re.findall(r'[A-Z][^A-Z]*', q) # split string on uppercase characters
+                q_uri_name = '_'.join(foo).lower() # remove empty strings and join with underscore AND make it lowercase
+                
+
+                # knowledge about plan properties
+                triples_list.append([plan_kb_uri, "ocra_common:'" + q_relation + "'", \
+                                    self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'"])
+                triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'", \
+                                    "dul:'hasDataValue'", str(plan_dict[q][i])])
+                triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'", \
+                                    "rdf:'type'", "dul:'Quality'"])
         
-            
         return triples_list
     
     def construct_query_text_for_single_triple_assertion(self, triple_subject, triple_relation, triple_object, add_final_dot, add_inverse_triple):
