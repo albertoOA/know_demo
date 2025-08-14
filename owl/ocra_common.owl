@@ -158,21 +158,21 @@ Note that this ontology aims to model the result of comparing two qualities&apos
     
 
 
-    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#hasExpectedMakespan -->
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#hasMakespan -->
 
-    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#hasExpectedMakespan">
+    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#hasMakespan">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasQuality"/>
-        <owl:inverseOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isExpectedMakespanOf"/>
+        <owl:inverseOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
         <rdfs:comment xml:lang="en">Relation between a Plan and a Quality that indicates the expected number of time units that will elapse from the start of the work described in the plan to the end.
 
 One might think that this relation could be modeled as a Data property instead of using an Object property. However, data instances cannot act as subjects in triples, thus, it would not be possible to represent some desirable statements such as &apos;the makespan of a plan is better/worse/equivalent to the makespan of a nother plan&apos;. For this reason, the relation is modeled as an Object property and users will need to add the actual value using the data property &apos;has data value&apos;.  
 
-Example of use: Px (instance of Plan) &apos;has expected makespan&apos; Qx (instance of Quality) that &apos;has data value&apos; 1600. 
+Example of use: Px (instance of Plan) &apos;has makespan&apos; Qx (instance of Quality) that &apos;has data value&apos; 1600. 
 
-It is recomended to use the International System of Units, thus, the encoded data value would be in seconds. However, users of this ontology might assert values in different units, as long as they specify it. For instance, they might add a subproperty of either this relation (&apos;has expected makespan in hours&apos; or the property &apos;has data value&apos; (&apos;has data value in hours&apos;).  this data property to indicate makespans using different units (e.g., hasExpectedMakespanInHours).</rdfs:comment>
-        <rdfs:label xml:lang="en">has expected makespan</rdfs:label>
+It is recomended to use the International System of Units, thus, the encoded data value would be in seconds. However, users of this ontology might assert values in different units, as long as they specify it. For instance, they might add a subproperty of either this relation (&apos;has makespan in hours&apos; or the property &apos;has data value&apos; (&apos;has data value in hours&apos;).  this data property to indicate makespans using different units (e.g., hasMakespanInHours).</rdfs:comment>
+        <rdfs:label xml:lang="en">has makespan</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -270,14 +270,14 @@ Note that this ontology aims to model the result of comparing two qualities&apos
     
 
 
-    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isExpectedMakespanOf -->
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf -->
 
-    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isExpectedMakespanOf">
+    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isQualityOf"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
-        <rdfs:comment xml:lang="en">For more information about this relation, please read the comment of its inverse &apos;has expected makespan&apos;.</rdfs:comment>
-        <rdfs:label xml:lang="en">is expected makespan of</rdfs:label>
+        <rdfs:comment xml:lang="en">For more information about this relation, please read the comment of its inverse &apos;has makespan&apos;.</rdfs:comment>
+        <rdfs:label xml:lang="en">is makespan of</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -289,7 +289,7 @@ Note that this ontology aims to model the result of comparing two qualities&apos
         <owl:inverseOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isSlowerPlanThan"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
-        <owl:propertyDisjointWith rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameExpectedMakespanAs"/>
+        <owl:propertyDisjointWith rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameMakespanAs"/>
         <rdfs:label xml:lang="en">is faster plan than</rdfs:label>
     </owl:ObjectProperty>
     
@@ -359,16 +359,16 @@ This relation is meant to be used for physical objects only, thus it is not cons
     
 
 
-    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameExpectedMakespanAs -->
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameMakespanAs -->
 
-    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameExpectedMakespanAs">
+    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameMakespanAs">
         <rdfs:subPropertyOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isEquivalentPlanTo"/>
-        <owl:inverseOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameExpectedMakespanAs"/>
+        <owl:inverseOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameMakespanAs"/>
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
         <owl:propertyDisjointWith rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isSlowerPlanThan"/>
-        <rdfs:label xml:lang="en">is plan with same expected makespan as</rdfs:label>
+        <rdfs:label xml:lang="en">is plan with same makespan as</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -491,9 +491,9 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
     
 
 
-    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanExpectedMakespan -->
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanMakespan -->
 
-    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanExpectedMakespan">
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanMakespan">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
@@ -512,8 +512,8 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
                 <owl:someValuesFrom rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:comment xml:lang="en">A Quality of Plans capturing the expected makespan or duration of executing the plan&apos;s sequence of tasks.</rdfs:comment>
-        <rdfs:label xml:lang="en">Plan expected makespan</rdfs:label>
+        <rdfs:comment xml:lang="en">A Quality of Plans capturing the makespan or duration of executing the plan&apos;s sequence of tasks.</rdfs:comment>
+        <rdfs:label xml:lang="en">Plan makespan</rdfs:label>
     </owl:Class>
     
 
@@ -526,7 +526,7 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
                 <owl:intersectionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
                     <owl:Restriction>
-                        <owl:onProperty rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isExpectedMakespanOf"/>
+                        <owl:onProperty rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf"/>
                         <owl:someValuesFrom rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
                     </owl:Restriction>
                 </owl:intersectionOf>
@@ -535,7 +535,7 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isExpectedMakespanOf"/>
+                <owl:onProperty rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf"/>
                 <owl:someValuesFrom rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
             </owl:Restriction>
         </rdfs:subClassOf>
