@@ -270,18 +270,6 @@ Note that this ontology aims to model the result of comparing two qualities&apos
     
 
 
-    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf -->
-
-    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf">
-        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isQualityOf"/>
-        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
-        <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
-        <rdfs:comment xml:lang="en">For more information about this relation, please read the comment of its inverse &apos;has makespan&apos;.</rdfs:comment>
-        <rdfs:label xml:lang="en">is makespan of</rdfs:label>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isFasterPlanThan -->
 
     <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isFasterPlanThan">
@@ -318,6 +306,18 @@ This relation is meant to be used for physical objects only, thus it is not cons
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
         <owl:propertyDisjointWith rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isPlanWithSameNumberOfTasksAs"/>
         <rdfs:label xml:lang="en">is longer plan than</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#isMakespanOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isQualityOf"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality"/>
+        <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
+        <rdfs:comment xml:lang="en">For more information about this relation, please read the comment of its inverse &apos;has makespan&apos;.</rdfs:comment>
+        <rdfs:label xml:lang="en">is makespan of</rdfs:label>
     </owl:ObjectProperty>
     
 
@@ -464,6 +464,24 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
     
 
 
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#AtypicalPlan -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#AtypicalPlan">
+        <rdfs:subClassOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanType"/>
+        <rdfs:label xml:lang="en">Atypical plan</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#AtypicalPlanQualityValue -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#AtypicalPlanQualityValue">
+        <rdfs:subClassOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanQualityValueType"/>
+        <rdfs:label xml:lang="en">Atypical plan quality value</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanCost -->
 
     <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanCost">
@@ -541,6 +559,66 @@ Negative statements are those in which the predicate/relation is negated (e.g., 
         </rdfs:subClassOf>
         <rdfs:comment xml:lang="en">A Quality of Plans capturing the number of tasks included in the plan.</rdfs:comment>
         <rdfs:label xml:lang="en">Plan number of tasks</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanQualityValueType -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanQualityValueType">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Concept"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanMakespan"/>
+                    <rdf:Description rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanNumberOfTasks"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#classifies"/>
+                        <owl:someValuesFrom rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanCost"/>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A Concept that classifies the quality of a plan (e.g. the cost).
+
+This can be used to specify how a Plan quality is classified with respect to others (e.g. typical).</rdfs:comment>
+        <rdfs:label xml:lang="en">Plan quality value type</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanType -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanType">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Concept"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#classifies"/>
+                <owl:someValuesFrom rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en">A Concept that classifies a Plan. 
+
+This can be used to specify how a Plan is classified with respect to others (e.g. typical).</rdfs:comment>
+        <rdfs:label xml:lang="en">Plan type</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#TypicalPlan -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#TypicalPlan">
+        <rdfs:subClassOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanType"/>
+        <rdfs:label xml:lang="en">Typical plan</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#TypicalPlanQualityValue -->
+
+    <owl:Class rdf:about="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#TypicalPlanQualityValue">
+        <rdfs:subClassOf rdf:resource="http://www.iri.upc.edu/groups/perception/OCRA/ont/ocra_common.owl#PlanQualityValueType"/>
+        <rdfs:label xml:lang="en">Typical plan quality value</rdfs:label>
     </owl:Class>
     
 
