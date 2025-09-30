@@ -43,6 +43,10 @@ if __name__ == "__main__":
     """
     ##print(plan_triples_list)
 
+    typicallity_triples_list = rosprolog_utils_object.classify_plan_qualities_as_typical_or_atypical_and_generate_triples(plans_qualities_values_dict)
+    plan_triples_list.extend(typicallity_triples_list)
+    print(typicallity_triples_list)
+
     plan_assertion_query_text = rosprolog_utils_object.construct_query_text_for_multiple_triples_assertion(plan_triples_list, True)
     ##print(plan_assertion_query_text)
 
@@ -51,6 +55,10 @@ if __name__ == "__main__":
 
     # run some logic-based rules to assert new comparative relations between every pair of plans
     query_string_foo_ = "compare_all_existing_plans_in_pairs()."
+    rosprolog_utils_object.rosprolog_assertion_query(query_string_foo_)
+
+    # run some logic-based rules to assert new knowledge about the classification of plans as typical or atypical
+    query_string_foo_ = "classify_all_plans_as_typical_or_atypical()."
     rosprolog_utils_object.rosprolog_assertion_query(query_string_foo_)
 
     # save the NEEM using in the name 'dataset_name' and the current time
