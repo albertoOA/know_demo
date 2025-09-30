@@ -4,8 +4,10 @@
 
 
 import re
+import math
 import rospy
 import rospkg
+import statistics
 import pandas as pd
 import numpy as np
 
@@ -53,7 +55,68 @@ class generalUtils:
 
         df = pd.DataFrame.from_dict(dict_in, orient='columns')
         df.to_csv(csv_file_path + '/' + csv_file_name, index=False) # data frame
-    
+
+    def empirical_highest_dense_interval_sliding(self, data, mass=0.68):
+        """
+        Empirical highest dense interval (HDI) via sliding window on sorted data.
+
+        Args:
+            data: a list containing univariate data 
+            mass: the selected mass to find the interval (it is the proportion of the data that must exist in the interval)
+                  by default, it is 0.68 (~one-sigma, values are within one standard deviation (σ) above or below the mean)
+
+        Returns:
+            dict_answer: a dict with the following keys  
+                        "low_bound, high_bound, width, mass, count, typical_value (median), inliers, indices"
+        """
+        xs, idxs = [], []
+        for i, x in enumerate(data):
+            if x is None:
+                continue
+            try:
+                xf = float(x)
+            except (TypeError, ValueError):
+                continue
+            if math.isnan(xf):
+                continue
+            xs.append(xf)
+            idxs.append(i)
+        n = len(xs)
+        if n == 0:
+            raise ValueError("No valid numeric data provided.")
+
+        order = sorted(range(n), key=lambda i: xs[i])
+        xs_sorted = [xs[i] for i in order]
+        idx_sorted = [idxs[i] for i in order]
+
+        # Include at least ceil(mass*n) points (so actual mass >= requested)
+        k = max(1, math.ceil(mass * n))
+        best = (float("inf"), None)  # (width, start_index)
+        for i in range(0, n - k + 1):
+            lo = xs_sorted[i]
+            hi = xs_sorted[i + k - 1]
+            width = hi - lo
+            if width < best[0]:
+                best = (width, i)
+        width, start = best
+        lo = xs_sorted[start]
+        hi = xs_sorted[start + k - 1]
+        window_points = xs_sorted[start:start + k]
+        window_indices = idx_sorted[start:start + k]
+
+        dict_answer =  {
+            "low_bound": lo,
+            "high_bound": hi,
+            "width": hi - lo,
+            "mass": k / n,
+            "count": k,
+            "typical_value": statistics.median(window_points),
+            "inliers": window_points,
+            "indices": window_indices,
+            "sorted_all": xs_sorted,
+        }   
+
+        return dict_answer     
    
 class rosprologUtils:
     def __init__(self):
@@ -64,6 +127,7 @@ class rosprologUtils:
         # Define varibles
         self.client_rosprolog_ = Prolog()
         ##self.current_plan_kb_uri = ""
+        self.general_utils_object = generalUtils()
 
         if (rospy.has_param('~semantic_map_namespace')):
             self.semantic_map_namespace = rospy.get_param('~semantic_map_namespace')
@@ -87,12 +151,12 @@ class rosprologUtils:
         rospy.loginfo(rospy.get_name() + ": Formatting the plan sequence details as a set of triples to assert them to the ontology KB")
 
         qualities_list = list(plan_dict.keys())
-        qualities_list.remove('PlanID')
+        qualities_list.remove(self.ontology_entity_to_compare)
         #print(qualities_list)
 
         triples_list = list()
-        for i in range(0, len(plan_dict["PlanID"])):
-            plan_id = plan_dict["PlanID"][i] #+ "_" + str(datetime.utcnow()).replace(" ", "_") + "-UTC"
+        for i in range(0, len(plan_dict[self.ontology_entity_to_compare])):
+            plan_id = plan_dict[self.ontology_entity_to_compare][i] #+ "_" + str(datetime.utcnow()).replace(" ", "_") + "-UTC"
             plan_kb_uri = self.semantic_map_namespace + ":'" + plan_id + "'"
             triples_list.append([plan_kb_uri, "rdf:'type'", "dul:'Plan'"])
 
@@ -111,6 +175,45 @@ class rosprologUtils:
                                     "dul:'hasDataValue'", str(plan_dict[q][i])])
                 triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'", \
                                     "rdf:'type'", "dul:'Quality'"])
+        
+        return triples_list
+    
+    def classify_plan_qualities_as_typical_or_atypical_and_generate_triples(self, plan_dict):
+        """
+        Creates a list of triples to assert to the knowledge base using the set of plans' qualities
+        from the input dictionary. The triples contain knowledge about whether the different qualities
+        are typical or not (within the set of values as a whole)
+
+        Args:
+            plan_dict: a dictionary containing the qualities of plans (keys are qualities IDs and values are lists)
+
+        Returns:
+            triples_list: a list of triples of the classification in typcial/atypical of the plans' qualities knowledge 
+            ready to be asserted
+        """
+        rospy.loginfo(rospy.get_name() + ": Formatting the plan sequence details as a set of triples to assert them to the ontology KB")
+
+        qualities_list = list(plan_dict.keys())
+        qualities_list.remove(self.ontology_entity_to_compare)
+        #print(qualities_list)
+
+        triples_list = list()
+        for q in qualities_list:
+            foo = re.findall(r'[A-Z][^A-Z]*', q) # split string on uppercase characters
+            q_uri_name = '_'.join(foo).lower() # remove empty strings and join with underscore AND make it lowercase
+            quality_values_for_all_plans = plan_dict[q]
+
+            typical_values_dict = self.general_utils_object.empirical_highest_dense_interval_sliding(quality_values_for_all_plans)
+            print(typical_values_dict)
+
+            for j in range (0, len(quality_values_for_all_plans)):
+                plan_id = plan_dict[self.ontology_entity_to_compare][j] #+ "_" + str(datetime.utcnow()).replace(" ", "_") + "-UTC"
+                if j in typical_values_dict["indices"]:
+                    triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'", \
+                                        "dul:'isClassifiedBy'", "ocra_common:'TypicalPlanQualityValue'"])
+                else:
+                    triples_list.append([self.semantic_map_namespace + ":'" + plan_id + "_" + q_uri_name + "'", \
+                                        "dul:'isClassifiedBy'", "ocra_common:'AtypicalPlanQualityValue'"])
         
         return triples_list
     
